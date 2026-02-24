@@ -104,33 +104,48 @@ const emptyTemplate = `
 </div>
 `;
 
-    // <div class=" bg-white p-6 space-y-4 rounded-xl mb-4 border">
 
-    //                 <div class="flex justify-between items-center">
-    //                     <div>
-    //                         <h3 class="font-semibold text-[18px] text-[#002C5C] ">WebFlow Agency</h3>
-    //                         <p class="text-[#64748B]">Web Designer & Developer</p>
-    //                     </div>
-    //                     <div>
-    //                         <i class="fa-solid fa-trash-can"></i>
-    //                     </div>
-    //                 </div>
+ const mainContainer=document.querySelector('main');
 
-    //                 <p class="text-[#64748B] text-[14px]">Los Angeles, CA • Part-time • $80,000 - $120,000</p>
-    //                 <p class="status bg-[#EEF4FF] p-2 w-[113px] text-[#002C5C] text-[14px] mb-2">NOT APPLIED</p>
-    //                 <p class="text-[#323B49] text-[14px]">Create stunning web experiences for high-profile clients. Must
-    //                     have portfolio and experience with modern web design trends.</p>
+        mainContainer.addEventListener('click', function(event){
 
-    //                 <button
-    //                     class="interviewBtn text-[#10B981] text-[14px] font-semibold p-2 mr-2 rounded-xl border-2 border-[#10B981]">INTERVIEW</button>
+            if(event.target.classList.contains('interviewBtn')){
+                
+            const parentNode=event.target.parentNode;
+            const jobName=parentNode.querySelector('.jobName').innerText;
+            const jobNature=parentNode.querySelector('.jobNature').innerText;
+            const jobDetails=parentNode.querySelector('.jobDetails').innerText;
+            const status=parentNode.querySelector('.status').innerText;
+            const note=parentNode.querySelector('.note').innerText;
+            
+            
+            const cardInfo={
+                jobName, jobNature, jobDetails, status:'Interview', note
+            }
+            
+            //let plantExist = interviewList.find(
+            //item => item.plantName === cardInfo.plantName
+            // );
+            
+            // if (!plantExist) {
+            //     interviewList.push(cardInfo);
+            // }
+            let plantExist = false;
+            for (i=0;i<interviewList.length;i++) {
+            if (interviewList[i].jobName == cardInfo.jobName) {
+            plantExist = true;
+            break;
+            }
+            }
+            
+            if (plantExist === false) {
+                interviewList.push(cardInfo);
+            }
 
-    //                 <button
-    //                     class="rejectedBtn text-[#EF4444] text-[14px] font-semibold p-2 rounded-xl border-2 border-[#EF4444]">REJECTED</button>
+             rejectedList= rejectedList.filter(item => item.jobName != cardInfo.jobName);
 
-    //             </div>
-
-    // <div class="text-center bg-white rounded-xl p-20">
-    //                 <img src="./jobs.png" class="mx-auto mb-5">
-    //                 <h1 class="text-[#002C5C] font-semibold text-[24px]">No jobs available</h1>
-    //                 <p class="text-[#64748B]">Check back soon for new job opportunities</p>
-    //             </div>
+             if(currentstatus === 'rejectedshowBtn'){
+                renderrejected();
+            }
+            calculateCount();
+            
