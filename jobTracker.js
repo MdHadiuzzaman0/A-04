@@ -11,6 +11,11 @@ const filterSection=document.getElementById('filteredSection');
 const card=document.getElementById('allcards');
 
 
+let interviewList=[];
+        let rejectedList=[];
+        let currentstatus='all';
+
+
 
 // jobCounter 
 function updateJobCounter() {
@@ -148,4 +153,48 @@ const emptyTemplate = `
                 renderrejected();
             }
             calculateCount();
+    }
+    else if(event.target.classList.contains('rejectedBtn')){
+                
+            const parentNode=event.target.parentNode;
+            const jobName=parentNode.querySelector('.jobName').innerText;
+            const jobNature=parentNode.querySelector('.jobNature').innerText;
+            const jobDetails=parentNode.querySelector('.jobDetails').innerText;
+            const status=parentNode.querySelector('.status').innerText;
+            const note=parentNode.querySelector('.note').innerText;
+            
+            
+            const cardInfo={
+                jobName, jobNature, jobDetails, status:'Rejected', note
+            }
+            
+            //let plantExist = interviewList.find(
+            //item => item.plantName === cardInfo.plantName
+            // );
+            
+            // if (!plantExist) {
+            //     interviewList.push(cardInfo);
+            // }
+            let plantExist = false;
+            for (i=0;i<rejectedList.length;i++) {
+            if (rejectedList[i].jobName == cardInfo.jobName) {
+            plantExist = true;
+            break;
+            }
+            }
+            
+            if (plantExist === false) {
+                rejectedList.push(cardInfo);
+            }
+
+            interviewList= interviewList.filter(item => item.jobName != cardInfo.jobName);
+
+            if(currentstatus === 'interviewshowBtn'){
+                renderinterview();
+            }
+            calculateCount();
+            
+
+            }
+            })
             
